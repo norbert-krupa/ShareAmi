@@ -4,14 +4,13 @@ import com.shareami.user.dto.RegisterUserRequest;
 import com.shareami.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +30,12 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable UUID id) {
+        UserResponse response = userService.getUser(id);
+
+        return ResponseEntity.ok(response);
     }
 }

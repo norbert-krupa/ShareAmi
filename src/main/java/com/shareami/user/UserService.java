@@ -3,11 +3,14 @@ package com.shareami.user;
 import com.shareami.user.dto.RegisterUserRequest;
 import com.shareami.user.dto.UserResponse;
 import com.shareami.user.exceptions.EmailAlreadyTakenException;
+import com.shareami.user.exceptions.UserNotFoundException;
 import com.shareami.user.exceptions.UsernameAlreadyTakenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +41,13 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         return UserResponse.from(savedUser);
+    }
+
+    public UserResponse getUser(UUID id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+
+        return UserResponse.from(user);
     }
 }
