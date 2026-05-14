@@ -1,6 +1,5 @@
-package com.shareami.auth.exceptions;
+package com.shareami.auth;
 
-import com.shareami.auth.AuthService;
 import com.shareami.auth.dto.LoginRequest;
 import com.shareami.auth.dto.LoginResponse;
 import jakarta.validation.Valid;
